@@ -1,6 +1,21 @@
 import "./Contact.css";
 
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaWhatsapp,
+} from "react-icons/fa";
+
 function Contact() {
+
+  const phoneNumber = "918500001065";
+
+  const message =
+    "Hi Honique Farms! I'm interested in your Multiflora Honey. Could you please share the available sizes and prices?";
+
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
   return (
     <section id="contact" className="contact">
 
@@ -14,23 +29,29 @@ function Contact() {
       <div className="contact-grid">
 
         <div className="contact-card">
-          <h3>📞 Phone</h3>
-          <p>+91 XXXXXXXXXX</p>
+          <h3><FaPhoneAlt /> Phone</h3>
+          <p>+91 8500001065</p>
         </div>
 
         <div className="contact-card">
-          <h3>📧 Email</h3>
+          <h3><FaEnvelope /> Email</h3>
           <p>info@honiquefarms.com</p>
         </div>
 
         <div className="contact-card">
-          <h3>📍 Location</h3>
+          <h3><FaMapMarkerAlt /> Location</h3>
           <p>Andhra Pradesh, India</p>
         </div>
 
         <div className="contact-card">
-          <h3>💬 WhatsApp</h3>
-          <button>Chat on WhatsApp</button>
+          <h3><FaWhatsapp /> WhatsApp</h3>
+
+          <button
+            onClick={() => window.open(whatsappUrl, "_blank")}
+          >
+            Chat on WhatsApp
+          </button>
+
         </div>
 
       </div>

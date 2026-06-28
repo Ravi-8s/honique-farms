@@ -1,3 +1,4 @@
+import WhatsApp from "./components/WhatsApp/WhatsApp";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import TrustBar from "./components/TrustBar/TrustBar";
@@ -17,6 +18,7 @@ function App() {
       <WhyChooseUs />
       <Contact />
       <Footer />
+    <WhatsApp />
     </>
   );
 }

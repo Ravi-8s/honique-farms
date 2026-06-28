@@ -65,3 +65,36 @@ line-height:1.8;
 color:#666;
 
 }
+/* Mobile Responsive */
+
+@media (max-width: 768px) {
+
+    .why{
+        padding:60px 20px;
+    }
+
+    .why h2{
+        font-size:34px;
+        margin-bottom:35px;
+    }
+
+    .why-grid{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+    .why-card{
+        padding:25px 20px;
+    }
+
+    .why-card h3{
+        font-size:22px;
+        margin-bottom:15px;
+    }
+
+    .why-card p{
+        font-size:16px;
+        line-height:1.7;
+    }
+
+}

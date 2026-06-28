@@ -1,9 +1,14 @@
+import { useState } from "react";
+
 import "./Products.css";
 
 import bottle1kg from "../../assets/products/1kg.png";
 import jar500g from "../../assets/products/500g.png";
 
+import ProductModal from "../ProductModal/ProductModal";
+
 function Products() {
+
   const products = [
     {
       image: bottle1kg,
@@ -25,8 +30,11 @@ function Products() {
     },
   ];
 
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
   return (
     <section id="products" className="products">
+
       <h2>Our Products</h2>
 
       <p className="subtitle">
@@ -34,8 +42,11 @@ function Products() {
       </p>
 
       <div className="product-grid">
+
         {products.map((product) => (
+
           <div className="product-card" key={product.size}>
+
             <img src={product.image} alt={product.size} />
 
             <h5>{product.brand}</h5>
@@ -48,10 +59,23 @@ function Products() {
 
             <p>{product.description}</p>
 
-            <button>View Details</button>
+            <button
+              onClick={() => setSelectedProduct(product)}
+            >
+              View Details
+            </button>
+
           </div>
+
         ))}
+
       </div>
+
+      <ProductModal
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+      />
+
     </section>
   );
 }

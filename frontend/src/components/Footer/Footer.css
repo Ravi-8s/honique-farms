@@ -31,3 +31,25 @@ color:#ddd;
 color:#999;
 
 }
+/* Mobile Responsive */
+
+@media (max-width: 768px) {
+
+    .footer{
+        padding:40px 20px;
+    }
+
+    .footer h2{
+        font-size:28px;
+    }
+
+    .footer p{
+        font-size:16px;
+        line-height:1.7;
+    }
+
+    .footer small{
+        font-size:14px;
+    }
+
+}

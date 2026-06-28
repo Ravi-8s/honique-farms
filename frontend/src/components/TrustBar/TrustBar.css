@@ -57,3 +57,31 @@ color:#666;
 line-height:1.5;
 
 }
+/* Mobile Responsive */
+
+@media (max-width: 768px) {
+
+    .trust-bar{
+        grid-template-columns:repeat(2,1fr);
+        gap:15px;
+        padding:40px 20px;
+    }
+
+    .trust-item{
+        padding:20px 15px;
+    }
+
+    .trust-item span{
+        font-size:32px;
+    }
+
+    .trust-item h3{
+        font-size:20px;
+    }
+
+    .trust-item p{
+        font-size:15px;
+        line-height:1.6;
+    }
+
+}
