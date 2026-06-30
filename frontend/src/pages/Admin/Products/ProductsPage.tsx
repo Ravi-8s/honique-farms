@@ -24,7 +24,6 @@ function ProductsPage() {
 
   return (
     <div className="products-page">
-
       <h1>Product Management</h1>
 
       <p>Manage all products available in Honique ERP.</p>
@@ -38,9 +37,9 @@ function ProductsPage() {
       {showForm && (
         <ProductForm
           onClose={() => setShowForm(false)}
+          onProductAdded={loadProducts}
         />
       )}
-
     </div>
   );
 }
