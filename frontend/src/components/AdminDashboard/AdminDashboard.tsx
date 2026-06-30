@@ -1,6 +1,9 @@
 import "./AdminDashboard.css";
+import { useNavigate } from "react-router-dom";
 
 function AdminDashboard() {
+  const navigate = useNavigate();
+
   return (
     <div className="admin">
 
@@ -12,7 +15,10 @@ function AdminDashboard() {
 
       <div className="dashboard-grid">
 
-        <div className="dashboard-card">
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/products")}
+        >
           <h2>📦</h2>
           <h3>Products</h3>
           <p>2 Products</p>

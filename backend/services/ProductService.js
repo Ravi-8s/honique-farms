@@ -23,6 +23,19 @@ const getAllProducts = () => {
   return products;
 };
 
+const addProduct = (product) => {
+  const newProduct = {
+    id: products.length + 1,
+    isActive: true,
+    ...product,
+  };
+
+  products.push(newProduct);
+
+  return newProduct;
+};
+
 module.exports = {
   getAllProducts,
+  addProduct,
 };

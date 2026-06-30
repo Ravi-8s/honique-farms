@@ -1,0 +1,69 @@
+.products-page{
+    padding:40px;
+    background:#f8f9fc;
+    min-height:100vh;
+}
+
+.products-page h1{
+    color:#d97706;
+    margin-bottom:10px;
+}
+
+.products-page p{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.products-page button{
+    background:#d97706;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+th{
+    background:#d97706;
+    color:white;
+    padding:16px;
+    text-align:left;
+}
+
+td{
+    padding:16px;
+    border-bottom:1px solid #eee;
+}
+.button-group{
+    display:flex;
+    gap:15px;
+}
+
+.cancel-btn{
+    flex:1;
+    background:#999;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.save-btn{
+    flex:2;
+    background:#d97706;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    cursor:pointer;
+}
