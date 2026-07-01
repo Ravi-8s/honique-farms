@@ -4,6 +4,7 @@ table{
     background:white;
     border-radius:12px;
     overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
 th{
@@ -11,9 +12,43 @@ th{
     color:white;
     padding:16px;
     text-align:left;
+    font-size:16px;
 }
 
 td{
     padding:16px;
     border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#fafafa;
+}
+
+.edit-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:10px;
+    transition:0.3s;
+}
+
+.edit-btn:hover{
+    background:#1d4ed8;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.delete-btn:hover{
+    background:#b91c1c;
 }

@@ -19,9 +19,11 @@ export async function addProduct(product: any) {
     body: JSON.stringify(product),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to add product");
+    throw new Error(data.message);
   }
 
-  return response.json();
+  return data;
 }

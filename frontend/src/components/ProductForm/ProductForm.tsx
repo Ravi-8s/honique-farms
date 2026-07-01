@@ -41,9 +41,9 @@ function ProductForm({
       onProductAdded();
       onClose();
 
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to save product");
+      alert(error.message);
     }
   }
 
