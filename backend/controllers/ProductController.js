@@ -1,23 +1,30 @@
 const {
   getAllProducts,
   addProduct,
+  updateProduct,
+  deleteProduct,
 } = require("../services/ProductService");
 
 const getProducts = async (req, res) => {
   try {
     const products = await getAllProducts();
+
     res.json(products);
+
   } catch (error) {
+
     console.error("Error fetching products:", error);
 
     res.status(500).json({
       message: "Failed to fetch products",
     });
+
   }
 };
 
 const createProduct = async (req, res) => {
   try {
+
     const {
       name,
       category,
@@ -27,7 +34,6 @@ const createProduct = async (req, res) => {
       description,
     } = req.body;
 
-    // Validation
     if (!name || name.trim() === "") {
       return res.status(400).json({
         message: "Product name is required",
@@ -74,7 +80,63 @@ const createProduct = async (req, res) => {
   }
 };
 
+const editProduct = async (req, res) => {
+  try {
+
+    const id = Number(req.params.id);
+
+    const product = await updateProduct(id, req.body);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.json(product);
+
+  } catch (error) {
+
+    console.error("Error updating product:", error);
+
+    res.status(500).json({
+      message: "Failed to update product",
+    });
+
+  }
+};
+
+const removeProduct = async (req, res) => {
+  try {
+
+    const id = Number(req.params.id);
+
+    const product = await deleteProduct(id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.json({
+      message: "Product deleted successfully",
+    });
+
+  } catch (error) {
+
+    console.error("Error deleting product:", error);
+
+    res.status(500).json({
+      message: "Failed to delete product",
+    });
+
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
+  editProduct,
+  removeProduct,
 };

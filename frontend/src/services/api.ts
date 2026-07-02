@@ -27,3 +27,35 @@ export async function addProduct(product: any) {
 
   return data;
 }
+
+export async function updateProduct(id: number, product: any) {
+  const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
+
+export async function deleteProduct(id: number) {
+  const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+    method: "DELETE",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}

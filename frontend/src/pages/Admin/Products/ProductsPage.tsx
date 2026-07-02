@@ -32,7 +32,10 @@ function ProductsPage() {
         Add New Product
       </button>
 
-      <ProductTable products={products} />
+      <ProductTable
+        products={products}
+        onProductUpdated={loadProducts}
+      />
 
       {showForm && (
         <ProductForm

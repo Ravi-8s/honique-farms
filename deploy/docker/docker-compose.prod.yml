@@ -1,0 +1,66 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: honique-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: honique_erp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../../database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    networks:
+      - honique-network
+
+
+  backend:
+    build:
+      context: ../..
+      dockerfile: backend/Dockerfile
+
+    container_name: honique-backend
+
+    env_file:
+      - ../../backend/.env.docker
+
+    ports:
+      - "5000:5000"
+
+    depends_on:
+      - postgres
+
+    networks:
+      - honique-network
+
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/frontend.Dockerfile
+
+    container_name: honique-frontend
+
+    ports:
+      - "80:80"
+
+    depends_on:
+      - backend
+
+    networks:
+      - honique-network
+
+
+volumes:
+  postgres-data:
+
+networks:
+  honique-network:
