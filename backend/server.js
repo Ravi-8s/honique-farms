@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const pool = require("./config/database");
 const productRoutes = require("./routes/productRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const inventoryRoutes = require("./routes/inventoryRoutes");
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/products", productRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/inventory", inventoryRoutes);
 
 app.get("/", async (req, res) => {
 
