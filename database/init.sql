@@ -157,3 +157,57 @@ VALUES
     '533001'
 )
 ON CONFLICT (phone) DO NOTHING;
+
+
+-- =====================================================
+-- Orders
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS orders (
+
+    id SERIAL PRIMARY KEY,
+
+    customer_id INTEGER NOT NULL,
+
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    status VARCHAR(30) DEFAULT 'Pending',
+
+    total_amount DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT fk_orders_customer
+        FOREIGN KEY(customer_id)
+        REFERENCES customers(id)
+        ON DELETE RESTRICT
+
+);
+
+-- =====================================================
+-- Order Items
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS order_items (
+
+    id SERIAL PRIMARY KEY,
+
+    order_id INTEGER NOT NULL,
+
+    product_id INTEGER NOT NULL,
+
+    quantity INTEGER NOT NULL,
+
+    price DECIMAL(10,2) NOT NULL,
+
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT fk_order_items_order
+        FOREIGN KEY(order_id)
+        REFERENCES orders(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_order_items_product
+        FOREIGN KEY(product_id)
+        REFERENCES products(id)
+        ON DELETE RESTRICT
+
+);
