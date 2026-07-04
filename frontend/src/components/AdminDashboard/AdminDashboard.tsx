@@ -21,7 +21,16 @@ function AdminDashboard() {
         >
           <h2>📦</h2>
           <h3>Products</h3>
-          <p>2 Products</p>
+          <p>Manage Products</p>
+        </div>
+
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/categories")}
+        >
+          <h2>📂</h2>
+          <h3>Categories</h3>
+          <p>Manage Categories</p>
         </div>
 
         <div className="dashboard-card">
