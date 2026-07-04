@@ -193,3 +193,75 @@ export async function deleteInventory(id: number) {
 
   return data;
 }
+
+
+// -------------------- Customers --------------------
+
+export async function getCustomers() {
+  const response = await fetch(`${API_BASE_URL}/customers`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch customers");
+  }
+
+  return response.json();
+}
+
+export async function addCustomer(customer: any) {
+  const response = await fetch(`${API_BASE_URL}/customers`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(customer),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
+
+export async function updateCustomer(
+  id: number,
+  customer: any
+) {
+  const response = await fetch(
+    `${API_BASE_URL}/customers/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(customer),
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
+
+export async function deleteCustomer(id: number) {
+  const response = await fetch(
+    `${API_BASE_URL}/customers/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}

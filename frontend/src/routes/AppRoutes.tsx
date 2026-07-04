@@ -6,6 +6,7 @@ import AdminDashboard from "../components/AdminDashboard/AdminDashboard";
 import ProductsPage from "../pages/Admin/Products/ProductsPage";
 import CategoriesPage from "../pages/Admin/Categories/CategoriesPage";
 import InventoryPage from "../pages/Admin/Inventory/InventoryPage";
+import CustomersPage from "../pages/Admin/Customers/CustomersPage";
 
 export default function AppRoutes() {
   return (
@@ -36,6 +37,11 @@ export default function AppRoutes() {
           path="/admin/inventory"
           element={<InventoryPage />}
         />
+       
+        <Route
+ 	  path="/admin/customers"
+ 	  element={<CustomersPage />}
+	/>  
 
       </Routes>
     </BrowserRouter>

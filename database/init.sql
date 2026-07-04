@@ -101,3 +101,59 @@ VALUES
 (1, 120, 20, 'Warehouse'),
 (3, 60, 10, 'Warehouse')
 ON CONFLICT (product_id) DO NOTHING;
+
+-- =====================================================
+-- Customers
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS customers (
+    id SERIAL PRIMARY KEY,
+
+    name VARCHAR(150) NOT NULL,
+
+    phone VARCHAR(15) UNIQUE NOT NULL,
+
+    email VARCHAR(150),
+
+    address TEXT,
+
+    city VARCHAR(100),
+
+    state VARCHAR(100),
+
+    pincode VARCHAR(10),
+
+    is_active BOOLEAN DEFAULT TRUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO customers (
+    name,
+    phone,
+    email,
+    address,
+    city,
+    state,
+    pincode
+)
+VALUES
+(
+    'Ravi Shankar',
+    '8500001065',
+    'ravi@example.com',
+    'Main Road',
+    'Rajahmundry',
+    'Andhra Pradesh',
+    '533101'
+),
+(
+    'Suresh Kumar',
+    '9876543210',
+    'suresh@example.com',
+    'Market Street',
+    'Kakinada',
+    'Andhra Pradesh',
+    '533001'
+)
+ON CONFLICT (phone) DO NOTHING;
