@@ -2,6 +2,16 @@ import "./Hero.css";
 import bottle from "../../assets/images/honey-bottle.png";
 
 function Hero() {
+  function scrollToSection(id: string) {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }
+
   return (
     <section id="home" className="hero">
 
@@ -24,14 +34,29 @@ function Hero() {
         </p>
 
         <div className="hero-buttons">
-          <button>Shop Honey</button>
-          <button className="outline">Contact Us</button>
+
+          <button
+            onClick={() => scrollToSection("products")}
+          >
+            Shop Honey
+          </button>
+
+          <button
+            className="outline"
+            onClick={() => scrollToSection("contact")}
+          >
+            Contact Us
+          </button>
+
         </div>
 
       </div>
 
       <div className="hero-right">
-        <img src={bottle} alt="Honique Farms Honey Bottle" />
+        <img
+          src={bottle}
+          alt="Honique Farms Honey Bottle"
+        />
       </div>
 
     </section>
