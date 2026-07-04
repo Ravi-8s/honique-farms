@@ -1,13 +1,5 @@
 import "./InventoryTable.css";
-
-type Inventory = {
-  id: number;
-  productId: number;
-  productName: string;
-  quantity: number;
-  minimumStock: number;
-  location: string;
-};
+import type { Inventory } from "../../types/Inventory";
 
 type InventoryTableProps = {
   inventory: Inventory[];

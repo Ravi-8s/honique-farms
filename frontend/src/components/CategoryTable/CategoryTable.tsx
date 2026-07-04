@@ -1,11 +1,5 @@
 import "./CategoryTable.css";
-
-type Category = {
-  id: number;
-  name: string;
-  description: string;
-  isActive: boolean;
-};
+import type { Category } from "../../types/Category";
 
 type CategoryTableProps = {
   categories: Category[];

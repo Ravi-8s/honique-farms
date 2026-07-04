@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ProductForm.css";
-import { addProduct } from "../../services/api";
+
+import {
+  addProduct,
+  updateProduct,
+} from "../../services/api";
+
+import type { Product } from "../../types/Product";
 
 type ProductFormProps = {
   onClose: () => void;
   onProductAdded: () => void;
+  product?: Product | null;
 };
 
 function ProductForm({
   onClose,
   onProductAdded,
+  product,
 }: ProductFormProps) {
 
   const [formData, setFormData] = useState({
@@ -21,37 +29,79 @@ function ProductForm({
     description: "",
   });
 
+  useEffect(() => {
+
+    if (product) {
+
+      setFormData({
+        name: product.name,
+        category: product.category,
+        weight: product.weight,
+        price: product.price.toString(),
+        stock: product.stock.toString(),
+        description: product.description,
+      });
+
+    }
+
+  }, [product]);
+
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement
+    >
   ) {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
   }
 
   async function handleSubmit() {
+
     try {
-      await addProduct({
+
+      const payload = {
         ...formData,
         price: Number(formData.price),
         stock: Number(formData.stock),
-      });
+      };
+
+      if (product) {
+
+        await updateProduct(product.id, payload);
+
+      } else {
+
+        await addProduct(payload);
+
+      }
 
       onProductAdded();
+
       onClose();
 
     } catch (error: any) {
+
       console.error(error);
+
       alert(error.message);
+
     }
+
   }
 
   return (
+
     <div className="modal-overlay">
+
       <div className="modal">
 
-        <h2>Add Product</h2>
+        <h2>
+          {product ? "Edit Product" : "Add Product"}
+        </h2>
 
         <input
           name="name"
@@ -111,14 +161,17 @@ function ProductForm({
             className="save-btn"
             onClick={handleSubmit}
           >
-            Save Product
+            {product ? "Update Product" : "Save Product"}
           </button>
 
         </div>
 
       </div>
+
     </div>
+
   );
+
 }
 
 export default ProductForm;

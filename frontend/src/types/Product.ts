@@ -1,11 +1,11 @@
-export interface Product {
+export type Product = {
   id: number;
   name: string;
   category: string;
   weight: string;
   price: number;
   stock: number;
-  image: string;
   description: string;
+  image: string | null;
   isActive: boolean;
-}
+};

@@ -10,11 +10,14 @@ import {
   deleteCategory,
 } from "../../../services/api";
 
+import type { Category } from "../../../types/Category";
+
 function CategoriesPage() {
 
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [showForm, setShowForm] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState<Category | null>(null);
 
   useEffect(() => {
     loadCategories();
@@ -40,9 +43,10 @@ function CategoriesPage() {
     await deleteCategory(id);
 
     loadCategories();
+
   }
 
-  function handleEdit(category: any) {
+  function handleEdit(category: Category) {
 
     setSelectedCategory(category);
 
@@ -51,6 +55,7 @@ function CategoriesPage() {
   }
 
   return (
+
     <div className="categories-page">
 
       <h1>Category Management</h1>
@@ -75,6 +80,7 @@ function CategoriesPage() {
       />
 
       {showForm && (
+
         <CategoryForm
           category={selectedCategory}
           onClose={() => {
@@ -83,10 +89,13 @@ function CategoriesPage() {
           }}
           onCategoryAdded={loadCategories}
         />
+
       )}
 
     </div>
+
   );
+
 }
 
 export default CategoriesPage;

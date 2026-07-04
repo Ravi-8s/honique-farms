@@ -10,11 +10,14 @@ import {
   deleteInventory,
 } from "../../../services/api";
 
+import type { Inventory } from "../../../types/Inventory";
+
 function InventoryPage() {
 
-  const [inventory, setInventory] = useState<any[]>([]);
+  const [inventory, setInventory] = useState<Inventory[]>([]);
   const [showForm, setShowForm] = useState(false);
-  const [selectedInventory, setSelectedInventory] = useState<any>(null);
+  const [selectedInventory, setSelectedInventory] =
+    useState<Inventory | null>(null);
 
   useEffect(() => {
     loadInventory();
@@ -40,9 +43,10 @@ function InventoryPage() {
     await deleteInventory(id);
 
     loadInventory();
+
   }
 
-  function handleEdit(item: any) {
+  function handleEdit(item: Inventory) {
 
     setSelectedInventory(item);
 
@@ -51,6 +55,7 @@ function InventoryPage() {
   }
 
   return (
+
     <div className="inventory-page">
 
       <h1>Inventory Management</h1>
@@ -88,7 +93,9 @@ function InventoryPage() {
       )}
 
     </div>
+
   );
+
 }
 
 export default InventoryPage;
