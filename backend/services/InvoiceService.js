@@ -67,12 +67,48 @@ const getInvoiceByOrder = async (orderId) => {
 };
 
 // =====================================================
+// Get All Invoices
+// =====================================================
+
+const getInvoices = async () => {
+
+  const result = await pool.query(
+    `
+    SELECT
+
+      i.id,
+
+      i.invoice_number,
+
+      i.invoice_date,
+
+      c.name AS customer_name,
+
+      c.phone,
+
+      o.total_amount
+
+    FROM invoices i
+
+    JOIN orders o
+      ON o.id = i.order_id
+
+    JOIN customers c
+      ON c.id = o.customer_id
+
+    ORDER BY i.id DESC;
+    `
+  );
+
+  return result.rows;
+
+};
+
+// =====================================================
 // Get Complete Invoice Details
 // =====================================================
 
 const getInvoiceDetails = async (invoiceId) => {
-
-  // Invoice + Order + Customer + Company
 
   const headerResult = await pool.query(
     `
@@ -133,8 +169,6 @@ const getInvoiceDetails = async (invoiceId) => {
 
   }
 
-  // Invoice Items
-
   const itemsResult = await pool.query(
     `
     SELECT
@@ -179,6 +213,8 @@ module.exports = {
   createInvoice,
 
   getInvoiceByOrder,
+
+  getInvoices,
 
   getInvoiceDetails,
 

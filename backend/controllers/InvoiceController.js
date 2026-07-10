@@ -1,6 +1,38 @@
 const {
+  getInvoices,
   getInvoiceDetails,
 } = require("../services/InvoiceService");
+
+// =====================================================
+// Get All Invoices
+// =====================================================
+
+const fetchInvoices = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const invoices =
+      await getInvoices();
+
+    res.json(invoices);
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+
+      message:
+        "Failed to fetch invoices",
+
+    });
+
+  }
+
+};
 
 // =====================================================
 // Get Invoice Details
@@ -21,7 +53,10 @@ const fetchInvoiceDetails = async (
     if (!invoice) {
 
       return res.status(404).json({
-        message: "Invoice not found",
+
+        message:
+          "Invoice not found",
+
       });
 
     }
@@ -33,8 +68,10 @@ const fetchInvoiceDetails = async (
     console.error(error);
 
     res.status(500).json({
+
       message:
         "Failed to fetch invoice",
+
     });
 
   }
@@ -42,6 +79,8 @@ const fetchInvoiceDetails = async (
 };
 
 module.exports = {
+
+  fetchInvoices,
 
   fetchInvoiceDetails,
 

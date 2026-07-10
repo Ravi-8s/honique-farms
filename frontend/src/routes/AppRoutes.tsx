@@ -13,14 +13,13 @@ import ExpensesPage from "../pages/Admin/Expenses/ExpensesPage";
 import ReportsPage from "../pages/Admin/Reports/ReportsPage";
 import CompanyPage from "../pages/Admin/Company/CompanyPage";
 
+import InvoicesPage from "../pages/Admin/Invoices/InvoicesPage";
+import InvoiceDetailsPage from "../pages/Admin/Invoices/InvoiceDetailsPage";
+
 export default function AppRoutes() {
-
   return (
-
     <BrowserRouter>
-
       <Routes>
-
         <Route
           path="/"
           element={<App />}
@@ -62,6 +61,16 @@ export default function AppRoutes() {
         />
 
         <Route
+          path="/admin/invoices"
+          element={<InvoicesPage />}
+        />
+
+        <Route
+          path="/admin/invoices/:id"
+          element={<InvoiceDetailsPage />}
+        />
+
+        <Route
           path="/admin/expenses"
           element={<ExpensesPage />}
         />
@@ -75,11 +84,7 @@ export default function AppRoutes() {
           path="/admin/company"
           element={<CompanyPage />}
         />
-
       </Routes>
-
     </BrowserRouter>
-
   );
-
 }
