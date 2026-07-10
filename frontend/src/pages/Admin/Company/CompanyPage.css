@@ -1,0 +1,66 @@
+.company-page {
+
+  max-width: 900px;
+
+  margin: auto;
+
+  padding: 30px;
+
+}
+
+.company-form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+
+  margin-top: 30px;
+
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 12px;
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+}
+
+.company-form label {
+
+  font-weight: 600;
+
+  color: #444;
+
+}
+
+.company-form input,
+.company-form textarea {
+
+  padding: 12px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+}
+
+.company-form textarea {
+
+  min-height: 100px;
+
+  resize: vertical;
+
+}
+
+.company-form .add-btn {
+
+  margin-top: 15px;
+
+  align-self: flex-start;
+
+}

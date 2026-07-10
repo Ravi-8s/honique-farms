@@ -1,5 +1,13 @@
 const pool = require("../config/database");
 
+const {
+  createInvoice,
+} = require("./InvoiceService");
+
+// =====================================================
+// Create Order
+// =====================================================
+
 const createOrder = async (orderData) => {
 
   const client = await pool.connect();
@@ -8,13 +16,13 @@ const createOrder = async (orderData) => {
 
     await client.query("BEGIN");
 
-    // =====================================================
-    // Validate Inventory & Calculate Total
-    // =====================================================
-
     let totalAmount = 0;
 
     const productDetails = [];
+
+    // =====================================================
+    // Validate Inventory
+    // =====================================================
 
     for (const item of orderData.items) {
 
@@ -75,10 +83,8 @@ const createOrder = async (orderData) => {
         customer_id,
         total_amount
       )
-
       VALUES
       ($1,$2)
-
       RETURNING id;
       `,
       [
@@ -105,7 +111,6 @@ const createOrder = async (orderData) => {
           price,
           subtotal
         )
-
         VALUES
         ($1,$2,$3,$4,$5)
         `,
@@ -129,9 +134,7 @@ const createOrder = async (orderData) => {
       await client.query(
         `
         UPDATE inventory
-
         SET quantity = quantity - $1
-
         WHERE product_id = $2
         `,
         [
@@ -142,12 +145,32 @@ const createOrder = async (orderData) => {
 
     }
 
+    // =====================================================
+    // Create Invoice
+    // =====================================================
+
+    const invoice = await createInvoice(
+      client,
+      orderId
+    );
+
+    // =====================================================
+    // Commit Transaction
+    // =====================================================
+
     await client.query("COMMIT");
 
     return {
+
       message: "Order created successfully",
+
       orderId,
+
+      invoiceNumber:
+        invoice.invoice_number,
+
       totalAmount,
+
     };
 
   } catch (error) {
@@ -163,6 +186,10 @@ const createOrder = async (orderData) => {
   }
 
 };
+
+// =====================================================
+// Get All Orders
+// =====================================================
 
 const getOrders = async () => {
 
@@ -183,7 +210,99 @@ const getOrders = async () => {
 
 };
 
+// =====================================================
+// Get Order By Id
+// =====================================================
+
+const getOrderById = async (id) => {
+
+  const orderResult = await pool.query(
+    `
+    SELECT
+      o.id,
+      c.name AS customer,
+      c.phone,
+      c.email,
+      o.order_date,
+      o.status,
+      o.total_amount
+    FROM orders o
+    JOIN customers c
+      ON c.id = o.customer_id
+    WHERE o.id = $1
+    `,
+    [id]
+  );
+
+  if (orderResult.rows.length === 0) {
+
+    return null;
+
+  }
+
+  const itemsResult = await pool.query(
+    `
+    SELECT
+      p.name,
+      p.weight,
+      oi.quantity,
+      oi.price,
+      oi.subtotal
+    FROM order_items oi
+    JOIN products p
+      ON p.id = oi.product_id
+    WHERE oi.order_id = $1
+    ORDER BY oi.id
+    `,
+    [id]
+  );
+
+  return {
+
+    ...orderResult.rows[0],
+
+    items: itemsResult.rows,
+
+  };
+
+};
+
+// =====================================================
+// Update Order Status
+// =====================================================
+
+const updateOrderStatus = async (
+  id,
+  status
+) => {
+
+  const result = await pool.query(
+    `
+    UPDATE orders
+    SET status = $1
+    WHERE id = $2
+    RETURNING
+      id,
+      status;
+    `,
+    [
+      status,
+      id,
+    ]
+  );
+
+  return result.rows[0];
+
+};
+
 module.exports = {
+
   createOrder,
+
   getOrders,
+
+  getOrderById,
+
+  updateOrderStatus,
+
 };

@@ -53,16 +53,40 @@ function AdminDashboard() {
           <p>Manage Customers</p>
         </div>
 
-        <div className="dashboard-card">
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/orders")}
+        >
           <h2>🛒</h2>
           <h3>Orders</h3>
-          <p>Coming Soon</p>
+          <p>Manage Orders</p>
         </div>
 
-        <div className="dashboard-card">
-          <h2>📈</h2>
-          <h3>Revenue</h3>
-          <p>Coming Soon</p>
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/expenses")}
+        >
+          <h2>💸</h2>
+          <h3>Expenses</h3>
+          <p>Manage Expenses</p>
+        </div>
+
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/reports")}
+        >
+          <h2>📊</h2>
+          <h3>Reports</h3>
+          <p>Business Reports</p>
+        </div>
+
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/company")}
+        >
+          <h2>🏢</h2>
+          <h3>Company</h3>
+          <p>Company Settings</p>
         </div>
 
       </div>

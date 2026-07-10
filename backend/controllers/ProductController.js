@@ -1,12 +1,15 @@
 const {
   getAllProducts,
+  getAvailableProducts,
   addProduct,
   updateProduct,
   deleteProduct,
 } = require("../services/ProductService");
 
 const getProducts = async (req, res) => {
+
   try {
+
     const products = await getAllProducts();
 
     res.json(products);
@@ -20,9 +23,35 @@ const getProducts = async (req, res) => {
     });
 
   }
+
+};
+
+// =====================================================
+// Products Available For Orders
+// =====================================================
+
+const getProductsForOrders = async (req, res) => {
+
+  try {
+
+    const products = await getAvailableProducts();
+
+    res.json(products);
+
+  } catch (error) {
+
+    console.error("Error fetching available products:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch available products",
+    });
+
+  }
+
 };
 
 const createProduct = async (req, res) => {
+
   try {
 
     const {
@@ -78,9 +107,11 @@ const createProduct = async (req, res) => {
     });
 
   }
+
 };
 
 const editProduct = async (req, res) => {
+
   try {
 
     const id = Number(req.params.id);
@@ -88,9 +119,11 @@ const editProduct = async (req, res) => {
     const product = await updateProduct(id, req.body);
 
     if (!product) {
+
       return res.status(404).json({
         message: "Product not found",
       });
+
     }
 
     res.json(product);
@@ -104,9 +137,11 @@ const editProduct = async (req, res) => {
     });
 
   }
+
 };
 
 const removeProduct = async (req, res) => {
+
   try {
 
     const id = Number(req.params.id);
@@ -114,9 +149,11 @@ const removeProduct = async (req, res) => {
     const product = await deleteProduct(id);
 
     if (!product) {
+
       return res.status(404).json({
         message: "Product not found",
       });
+
     }
 
     res.json({
@@ -132,10 +169,12 @@ const removeProduct = async (req, res) => {
     });
 
   }
+
 };
 
 module.exports = {
   getProducts,
+  getProductsForOrders,
   createProduct,
   editProduct,
   removeProduct,

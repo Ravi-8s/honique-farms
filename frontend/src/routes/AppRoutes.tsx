@@ -7,10 +7,18 @@ import ProductsPage from "../pages/Admin/Products/ProductsPage";
 import CategoriesPage from "../pages/Admin/Categories/CategoriesPage";
 import InventoryPage from "../pages/Admin/Inventory/InventoryPage";
 import CustomersPage from "../pages/Admin/Customers/CustomersPage";
+import OrdersPage from "../pages/Admin/Orders/OrdersPage";
+import OrderDetailsPage from "../pages/Admin/Orders/OrderDetailsPage";
+import ExpensesPage from "../pages/Admin/Expenses/ExpensesPage";
+import ReportsPage from "../pages/Admin/Reports/ReportsPage";
+import CompanyPage from "../pages/Admin/Company/CompanyPage";
 
 export default function AppRoutes() {
+
   return (
+
     <BrowserRouter>
+
       <Routes>
 
         <Route
@@ -37,13 +45,41 @@ export default function AppRoutes() {
           path="/admin/inventory"
           element={<InventoryPage />}
         />
-       
+
         <Route
- 	  path="/admin/customers"
- 	  element={<CustomersPage />}
-	/>  
+          path="/admin/customers"
+          element={<CustomersPage />}
+        />
+
+        <Route
+          path="/admin/orders"
+          element={<OrdersPage />}
+        />
+
+        <Route
+          path="/admin/orders/:id"
+          element={<OrderDetailsPage />}
+        />
+
+        <Route
+          path="/admin/expenses"
+          element={<ExpensesPage />}
+        />
+
+        <Route
+          path="/admin/reports"
+          element={<ReportsPage />}
+        />
+
+        <Route
+          path="/admin/company"
+          element={<CompanyPage />}
+        />
 
       </Routes>
+
     </BrowserRouter>
+
   );
+
 }

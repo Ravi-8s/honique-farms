@@ -1,6 +1,7 @@
 const pool = require("../config/database");
 
 const getAllProducts = async () => {
+
   const result = await pool.query(`
     SELECT
       id,
@@ -18,13 +19,49 @@ const getAllProducts = async () => {
   `);
 
   return result.rows;
+
+};
+
+// =====================================================
+// Products Available For Orders
+// =====================================================
+
+const getAvailableProducts = async () => {
+
+  const result = await pool.query(`
+    SELECT
+      p.id,
+      p.name,
+      p.category,
+      p.weight,
+      p.price,
+      i.quantity AS stock
+    FROM products p
+    INNER JOIN inventory i
+      ON p.id = i.product_id
+    WHERE
+      p.is_active = TRUE
+      AND i.quantity > 0
+    ORDER BY p.name;
+  `);
+
+  return result.rows;
+
 };
 
 const addProduct = async (product) => {
+
   const result = await pool.query(
     `
     INSERT INTO products
-    (name, category, weight, price, stock, description)
+    (
+      name,
+      category,
+      weight,
+      price,
+      stock,
+      description
+    )
 
     VALUES
     ($1,$2,$3,$4,$5,$6)
@@ -51,12 +88,15 @@ const addProduct = async (product) => {
   );
 
   return result.rows[0];
+
 };
 
 const updateProduct = async (id, product) => {
+
   const result = await pool.query(
     `
     UPDATE products
+
     SET
       name = $1,
       category = $2,
@@ -64,6 +104,7 @@ const updateProduct = async (id, product) => {
       price = $4,
       stock = $5,
       description = $6
+
     WHERE id = $7
 
     RETURNING
@@ -89,13 +130,17 @@ const updateProduct = async (id, product) => {
   );
 
   return result.rows[0];
+
 };
 
 const deleteProduct = async (id) => {
+
   const result = await pool.query(
     `
     UPDATE products
+
     SET is_active = FALSE
+
     WHERE id = $1
 
     RETURNING id;
@@ -104,10 +149,12 @@ const deleteProduct = async (id) => {
   );
 
   return result.rows[0];
+
 };
 
 module.exports = {
   getAllProducts,
+  getAvailableProducts,
   addProduct,
   updateProduct,
   deleteProduct,

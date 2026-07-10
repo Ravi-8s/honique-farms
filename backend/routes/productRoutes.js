@@ -4,12 +4,20 @@ const router = express.Router();
 
 const {
   getProducts,
+  getProductsForOrders,
   createProduct,
   editProduct,
   removeProduct,
 } = require("../controllers/ProductController");
 
+// =====================================================
+// Product APIs
+// =====================================================
+
 router.get("/", getProducts);
+
+// Products available for Orders
+router.get("/available", getProductsForOrders);
 
 router.post("/", createProduct);
 

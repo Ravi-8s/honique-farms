@@ -1,0 +1,50 @@
+.orders-page{
+    padding:40px;
+    background:#f8f9fc;
+    min-height:100vh;
+}
+
+.orders-page h1{
+    color:#d97706;
+    margin-bottom:10px;
+}
+
+.orders-page p{
+    color:#666;
+}
+
+/* =======================================
+   Order Details
+======================================= */
+
+.orders-page select{
+
+    width:220px;
+
+    padding:10px 14px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    background:white;
+
+    cursor:pointer;
+
+}
+
+.orders-page select:focus{
+
+    outline:none;
+
+    border-color:#e67e00;
+
+}
+
+.orders-page .save-btn{
+
+    margin-top:20px;
+
+}

@@ -12,6 +12,20 @@ export async function getProducts() {
   return response.json();
 }
 
+export async function getAvailableProducts() {
+  const response = await fetch(
+    `${API_BASE_URL}/products/available`
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      "Failed to fetch available products"
+    );
+  }
+
+  return response.json();
+}
+
 export async function addProduct(product: any) {
   const response = await fetch(`${API_BASE_URL}/products`, {
     method: "POST",
@@ -264,4 +278,75 @@ export async function deleteCustomer(id: number) {
   }
 
   return data;
+}
+
+
+// -------------------- Orders --------------------
+
+export async function createOrder(order: any) {
+  const response = await fetch(`${API_BASE_URL}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(order),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+}
+
+export async function getOrders() {
+  const response = await fetch(`${API_BASE_URL}/orders`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch orders");
+  }
+
+  return response.json();
+}
+
+export async function getOrderById(id: number) {
+  const response = await fetch(
+    `${API_BASE_URL}/orders/${id}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch order");
+  }
+
+  return response.json();
+}
+
+export async function updateOrderStatus(
+  id: number,
+  status: string
+) {
+
+  const response = await fetch(
+    `${API_BASE_URL}/orders/${id}/status`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        status,
+      }),
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+
 }
