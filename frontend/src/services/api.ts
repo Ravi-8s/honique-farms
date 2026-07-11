@@ -350,3 +350,43 @@ export async function updateOrderStatus(
   return data;
 
 }
+
+// -------------------- Invoices --------------------
+
+export async function getInvoices() {
+
+  const response = await fetch(
+    `${API_BASE_URL}/invoices`
+  );
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Failed to fetch invoices"
+    );
+
+  }
+
+  return response.json();
+
+}
+
+export async function getInvoiceById(
+  id: number
+) {
+
+  const response = await fetch(
+    `${API_BASE_URL}/invoices/${id}`
+  );
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Failed to fetch invoice"
+    );
+
+  }
+
+  return response.json();
+
+}

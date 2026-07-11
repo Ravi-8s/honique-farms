@@ -17,9 +17,13 @@ import InvoicesPage from "../pages/Admin/Invoices/InvoicesPage";
 import InvoiceDetailsPage from "../pages/Admin/Invoices/InvoiceDetailsPage";
 
 export default function AppRoutes() {
+
   return (
+
     <BrowserRouter>
+
       <Routes>
+
         <Route
           path="/"
           element={<App />}
@@ -84,7 +88,11 @@ export default function AppRoutes() {
           path="/admin/company"
           element={<CompanyPage />}
         />
+
       </Routes>
+
     </BrowserRouter>
+
   );
+
 }

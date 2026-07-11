@@ -64,6 +64,15 @@ function AdminDashboard() {
 
         <div
           className="dashboard-card"
+          onClick={() => navigate("/admin/invoices")}
+        >
+          <h2>🧾</h2>
+          <h3>Invoices</h3>
+          <p>Manage Invoices</p>
+        </div>
+
+        <div
+          className="dashboard-card"
           onClick={() => navigate("/admin/expenses")}
         >
           <h2>💸</h2>
