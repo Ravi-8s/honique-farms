@@ -1,3 +1,9 @@
+import "./InvoiceDetails.css";
+
+import {
+  generateInvoicePDF,
+} from "../../utils/pdf";
+
 type Props = {
   invoice: any;
 };
@@ -8,145 +14,200 @@ function InvoiceDetails({
 
   return (
 
-    <div className="invoice-details">
+    <div className="invoice-container">
 
-      <h1>
-        {invoice.company_name}
-      </h1>
+      <div className="invoice-header">
 
-      <p>
-        {invoice.tagline}
-      </p>
+        <div className="company">
 
-      <hr />
+          <h1>{invoice.company_name}</h1>
 
-      <h2>
-        Invoice
-      </h2>
+          <p>{invoice.tagline}</p>
 
-      <p>
+          <p>{invoice.address}</p>
 
-        <strong>
-          Invoice Number:
-        </strong>{" "}
+          <p>
+            {invoice.city}, {invoice.state}
+          </p>
 
-        {invoice.invoice_number}
+          <p>{invoice.pincode}</p>
 
-      </p>
+          <p>
+            Phone : {invoice.company_phone}
+          </p>
 
-      <p>
+          <p>
+            Email : {invoice.company_email}
+          </p>
 
-        <strong>
-          Invoice Date:
-        </strong>{" "}
+        </div>
 
-        {new Date(
-          invoice.invoice_date
-        ).toLocaleDateString("en-IN")}
+        <div className="invoice-info">
 
-      </p>
+          <h2>INVOICE</h2>
 
-      <hr />
+          <p>
 
-      <h3>
-        Customer Details
-      </h3>
+            <strong>
+              Invoice No
+            </strong>
 
-      <p>
+            <br />
 
-        <strong>Name:</strong>{" "}
+            {invoice.invoice_number}
 
-        {invoice.customer_name}
+          </p>
 
-      </p>
+          <p>
 
-      <p>
+            <strong>
+              Invoice Date
+            </strong>
 
-        <strong>Phone:</strong>{" "}
+            <br />
 
-        {invoice.phone}
+            {new Date(
+              invoice.invoice_date
+            ).toLocaleDateString("en-IN")}
 
-      </p>
+          </p>
 
-      <p>
+        </div>
 
-        <strong>Email:</strong>{" "}
+      </div>
 
-        {invoice.email}
+      <div className="section">
 
-      </p>
+        <h3>Customer Details</h3>
 
-      <hr />
+        <p>
 
-      <h3>
-        Items
-      </h3>
+          <strong>Name :</strong>{" "}
 
-      <table>
+          {invoice.customer_name}
 
-        <thead>
+        </p>
 
-          <tr>
+        <p>
 
-            <th>Product</th>
-            <th>Weight</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
+          <strong>Phone :</strong>{" "}
 
-          </tr>
+          {invoice.phone}
 
-        </thead>
+        </p>
 
-        <tbody>
+        <p>
 
-          {invoice.items.map(
-            (item: any, index: number) => (
+          <strong>Email :</strong>{" "}
 
-              <tr key={index}>
+          {invoice.email}
 
-                <td>{item.name}</td>
+        </p>
 
-                <td>{item.weight}</td>
+      </div>
 
-                <td>{item.quantity}</td>
+      <div className="section">
 
-                <td>
+        <h3>Items</h3>
 
-                  ₹{Number(item.price).toFixed(2)}
+        <table className="invoice-table">
 
-                </td>
+          <thead>
 
-                <td>
+            <tr>
 
-                  ₹{Number(item.subtotal).toFixed(2)}
+              <th>Product</th>
+              <th>Weight</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
 
-                </td>
+            </tr>
 
-              </tr>
+          </thead>
 
-            )
-          )}
+          <tbody>
 
-        </tbody>
+            {invoice.items.map(
+              (
+                item: any,
+                index: number
+              ) => (
 
-      </table>
+                <tr key={index}>
 
-      <hr />
+                  <td>{item.name}</td>
 
-      <h2>
+                  <td>{item.weight}</td>
 
-        Grand Total :
+                  <td>{item.quantity}</td>
 
-        {" "}
+                  <td>
 
-        ₹
+                    ₹
 
-        {Number(
-          invoice.total_amount
-        ).toFixed(2)}
+                    {Number(
+                      item.price
+                    ).toFixed(2)}
 
-      </h2>
+                  </td>
+
+                  <td>
+
+                    ₹
+
+                    {Number(
+                      item.subtotal
+                    ).toFixed(2)}
+
+                  </td>
+
+                </tr>
+
+              )
+            )}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <div className="total">
+
+        <h2>
+
+          Grand Total :
+
+          {" "}
+
+          ₹
+
+          {Number(
+            invoice.total_amount
+          ).toFixed(2)}
+
+        </h2>
+
+      </div>
+
+      <div className="actions">
+
+        <button
+          onClick={() => window.print()}
+        >
+          Print Invoice
+        </button>
+
+        <button
+          onClick={() =>
+            generateInvoicePDF(invoice)
+          }
+        >
+          Download PDF
+        </button>
+
+      </div>
 
     </div>
 
