@@ -75,6 +75,12 @@ const createProduct = async (req, res) => {
       });
     }
 
+    if (!weight || weight.trim() === "") {
+      return res.status(400).json({
+        message: "Weight is required",
+      });
+    }
+
     if (price <= 0) {
       return res.status(400).json({
         message: "Price must be greater than zero",
@@ -101,6 +107,12 @@ const createProduct = async (req, res) => {
   } catch (error) {
 
     console.error("Error creating product:", error);
+
+    if (error.message === "PRODUCT_ALREADY_EXISTS") {
+      return res.status(409).json({
+        message: "Product already exists",
+      });
+    }
 
     res.status(500).json({
       message: "Failed to create product",

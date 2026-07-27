@@ -16,6 +16,57 @@ const getAllCategories = async () => {
 };
 
 const addCategory = async (category) => {
+
+  // Check whether a category with the same name already exists
+  const existingCategory = await pool.query(
+    `
+    SELECT
+      id,
+      is_active
+    FROM categories
+    WHERE LOWER(TRIM(name)) = LOWER(TRIM($1));
+    `,
+    [category.name]
+  );
+
+  // Category already exists
+  if (existingCategory.rows.length > 0) {
+
+    const existing = existingCategory.rows[0];
+
+    // Already active
+    if (existing.is_active) {
+
+      throw new Error("CATEGORY_ALREADY_EXISTS");
+
+    }
+
+    // Restore inactive category
+    const restoredCategory = await pool.query(
+      `
+      UPDATE categories
+      SET
+        is_active = TRUE,
+        description = $1
+      WHERE id = $2
+
+      RETURNING
+        id,
+        name,
+        description,
+        is_active AS "isActive";
+      `,
+      [
+        category.description,
+        existing.id,
+      ]
+    );
+
+    return restoredCategory.rows[0];
+
+  }
+
+  // Create a brand-new category
   const result = await pool.query(
     `
     INSERT INTO categories
@@ -31,12 +82,13 @@ const addCategory = async (category) => {
       is_active AS "isActive";
     `,
     [
-      category.name,
+      category.name.trim(),
       category.description,
     ]
   );
 
   return result.rows[0];
+
 };
 
 const updateCategory = async (id, category) => {

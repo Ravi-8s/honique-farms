@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import InventoryForm from "../../../components/InventoryForm/InventoryForm";
 import InventoryTable from "../../../components/InventoryTable/InventoryTable";
 
@@ -56,43 +58,47 @@ function InventoryPage() {
 
   return (
 
-    <div className="inventory-page">
+    <AdminLayout>
 
-      <h1>Inventory Management</h1>
+      <div className="inventory-page">
 
-      <p>
-        Manage stock levels for all products.
-      </p>
+        <h1>Inventory Management</h1>
 
-      <button
-        onClick={() => {
-          setSelectedInventory(null);
-          setShowForm(true);
-        }}
-      >
-        Add Inventory
-      </button>
+        <p>
+          Manage stock levels for all products.
+        </p>
 
-      <InventoryTable
-        inventory={inventory}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-
-      {showForm && (
-
-        <InventoryForm
-          inventory={selectedInventory}
-          onClose={() => {
-            setShowForm(false);
+        <button
+          onClick={() => {
             setSelectedInventory(null);
+            setShowForm(true);
           }}
-          onInventoryAdded={loadInventory}
+        >
+          Add Inventory
+        </button>
+
+        <InventoryTable
+          inventory={inventory}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
 
-      )}
+        {showForm && (
 
-    </div>
+          <InventoryForm
+            inventory={selectedInventory}
+            onClose={() => {
+              setShowForm(false);
+              setSelectedInventory(null);
+            }}
+            onInventoryAdded={loadInventory}
+          />
+
+        )}
+
+      </div>
+
+    </AdminLayout>
 
   );
 

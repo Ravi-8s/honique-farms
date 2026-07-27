@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import ProductForm from "../../../components/ProductForm/ProductForm";
 import ProductTable from "../../../components/ProductTable/ProductTable";
 
@@ -56,43 +58,47 @@ function ProductsPage() {
 
   return (
 
-    <div className="products-page">
+    <AdminLayout>
 
-      <h1>Product Management</h1>
+      <div className="products-page">
 
-      <p>
-        Manage all products available in Honique ERP.
-      </p>
+        <h1>Product Management</h1>
 
-      <button
-        onClick={() => {
-          setSelectedProduct(null);
-          setShowForm(true);
-        }}
-      >
-        Add New Product
-      </button>
+        <p>
+          Manage all products available in Honique ERP.
+        </p>
 
-      <ProductTable
-        products={products}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-
-      {showForm && (
-
-        <ProductForm
-          product={selectedProduct}
-          onClose={() => {
-            setShowForm(false);
+        <button
+          onClick={() => {
             setSelectedProduct(null);
+            setShowForm(true);
           }}
-          onProductAdded={loadProducts}
+        >
+          Add New Product
+        </button>
+
+        <ProductTable
+          products={products}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
 
-      )}
+        {showForm && (
 
-    </div>
+          <ProductForm
+            product={selectedProduct}
+            onClose={() => {
+              setShowForm(false);
+              setSelectedProduct(null);
+            }}
+            onProductAdded={loadProducts}
+          />
+
+        )}
+
+      </div>
+
+    </AdminLayout>
 
   );
 

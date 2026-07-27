@@ -6,6 +6,8 @@ import {
   updateProduct,
 } from "../../services/api";
 
+import { notify } from "../../utils/notify";
+
 import type { Product } from "../../types/Product";
 
 type ProductFormProps = {
@@ -72,22 +74,28 @@ function ProductForm({
       if (product) {
 
         await updateProduct(product.id, payload);
+        notify.success("Product updated successfully");
 
       } else {
 
         await addProduct(payload);
+        notify.success("Product added successfully");
 
       }
 
       onProductAdded();
-
       onClose();
 
     } catch (error: any) {
 
       console.error(error);
 
-      alert(error.message);
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+      notify.error(message);
 
     }
 

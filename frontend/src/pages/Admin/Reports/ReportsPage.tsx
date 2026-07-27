@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import "./ReportsPage.css";
 
 function ReportsPage() {
@@ -25,11 +28,15 @@ function ReportsPage() {
 
     return (
 
-      <div className="reports-page">
+      <AdminLayout>
 
-        <h2>Loading...</h2>
+        <div className="reports-page">
 
-      </div>
+          <h2>Loading...</h2>
+
+        </div>
+
+      </AdminLayout>
 
     );
 
@@ -37,93 +44,97 @@ function ReportsPage() {
 
   return (
 
-    <div className="reports-page">
+    <AdminLayout>
 
-      <h1>Business Reports</h1>
+      <div className="reports-page">
 
-      <div className="summary-grid">
+        <h1>Business Reports</h1>
 
-        <div className="summary-card">
+        <div className="summary-grid">
 
-          <h3>Total Revenue</h3>
+          <div className="summary-card">
 
-          <h2>
+            <h3>Total Revenue</h3>
 
-            ₹
+            <h2>
 
-            {summary.totalRevenue.toLocaleString("en-IN")}
+              ₹
 
-          </h2>
+              {summary.totalRevenue.toLocaleString("en-IN")}
 
-        </div>
+            </h2>
 
-        <div className="summary-card">
+          </div>
 
-          <h3>Total Expenses</h3>
+          <div className="summary-card">
 
-          <h2>
+            <h3>Total Expenses</h3>
 
-            ₹
+            <h2>
 
-            {summary.totalExpenses.toLocaleString("en-IN")}
+              ₹
 
-          </h2>
+              {summary.totalExpenses.toLocaleString("en-IN")}
 
-        </div>
+            </h2>
 
-        <div className="summary-card">
+          </div>
 
-          <h3>Net Profit</h3>
+          <div className="summary-card">
 
-          <h2>
+            <h3>Net Profit</h3>
 
-            ₹
+            <h2>
 
-            {summary.profit.toLocaleString("en-IN")}
+              ₹
 
-          </h2>
+              {summary.profit.toLocaleString("en-IN")}
 
-        </div>
+            </h2>
 
-        <div className="summary-card">
+          </div>
 
-          <h3>Profit Margin</h3>
+          <div className="summary-card">
 
-          <h2>
+            <h3>Profit Margin</h3>
 
-            {summary.profitMargin}%
+            <h2>
 
-          </h2>
+              {summary.profitMargin}%
 
-        </div>
+            </h2>
 
-        <div className="summary-card">
+          </div>
 
-          <h3>Total Orders</h3>
+          <div className="summary-card">
 
-          <h2>
+            <h3>Total Orders</h3>
 
-            {summary.totalOrders}
+            <h2>
 
-          </h2>
+              {summary.totalOrders}
 
-        </div>
+            </h2>
 
-        <div className="summary-card">
+          </div>
 
-          <h3>Total Customers</h3>
+          <div className="summary-card">
 
-          <h2>
+            <h3>Total Customers</h3>
 
-            {summary.totalCustomers}
+            <h2>
 
-          </h2>
+              {summary.totalCustomers}
+
+            </h2>
+
+          </div>
 
         </div>
 
       </div>
 
-    </div>
+    </AdminLayout>
 
   );
 

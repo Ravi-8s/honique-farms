@@ -51,6 +51,67 @@ const getAvailableProducts = async () => {
 
 const addProduct = async (product) => {
 
+  const existingProduct = await pool.query(
+    `
+    SELECT
+      id,
+      is_active
+    FROM products
+    WHERE
+      LOWER(TRIM(name)) = LOWER(TRIM($1))
+      AND LOWER(TRIM(weight)) = LOWER(TRIM($2));
+    `,
+    [
+      product.name,
+      product.weight,
+    ]
+  );
+
+  if (existingProduct.rows.length > 0) {
+
+    const existing = existingProduct.rows[0];
+
+    if (existing.is_active) {
+      throw new Error("PRODUCT_ALREADY_EXISTS");
+    }
+
+    const restoredProduct = await pool.query(
+      `
+      UPDATE products
+
+      SET
+        category = $1,
+        price = $2,
+        stock = $3,
+        description = $4,
+        is_active = TRUE
+
+      WHERE id = $5
+
+      RETURNING
+        id,
+        name,
+        category,
+        weight,
+        price,
+        stock,
+        description,
+        image,
+        is_active AS "isActive";
+      `,
+      [
+        product.category,
+        product.price,
+        product.stock,
+        product.description,
+        existing.id,
+      ]
+    );
+
+    return restoredProduct.rows[0];
+
+  }
+
   const result = await pool.query(
     `
     INSERT INTO products
@@ -78,9 +139,9 @@ const addProduct = async (product) => {
       is_active AS "isActive";
     `,
     [
-      product.name,
+      product.name.trim(),
       product.category,
-      product.weight,
+      product.weight.trim(),
       product.price,
       product.stock,
       product.description,

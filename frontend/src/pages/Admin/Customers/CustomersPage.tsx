@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import CustomerForm from "../../../components/CustomerForm/CustomerForm";
 import CustomerTable from "../../../components/CustomerTable/CustomerTable";
+import ConfirmDialog from "../../../components/ConfirmDialog/ConfirmDialog";
 
 import "./CustomersPage.css";
 
@@ -12,12 +15,21 @@ import {
 
 import type { Customer } from "../../../types/Customer";
 
+import { notify } from "../../../utils/notify";
+
 function CustomersPage() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [showForm, setShowForm] = useState(false);
+
   const [selectedCustomer, setSelectedCustomer] =
     useState<Customer | null>(null);
+
+  const [showConfirm, setShowConfirm] =
+    useState(false);
+
+  const [customerToDelete, setCustomerToDelete] =
+    useState<number | null>(null);
 
   useEffect(() => {
     loadCustomers();
@@ -35,21 +47,46 @@ function CustomersPage() {
 
       console.error(error);
 
+      notify.error("Failed to load customers");
+
     }
 
   }
 
-  async function handleDelete(id: number) {
+  function handleDelete(id: number) {
 
-    const confirmed = window.confirm(
-      "Delete this customer?"
-    );
+    setCustomerToDelete(id);
 
-    if (!confirmed) return;
+    setShowConfirm(true);
 
-    await deleteCustomer(id);
+  }
 
-    loadCustomers();
+  async function confirmDelete() {
+
+    if (customerToDelete === null)
+      return;
+
+    try {
+
+      const result =
+        await deleteCustomer(customerToDelete);
+
+      notify.success(result.message);
+
+      loadCustomers();
+
+    } catch (error: any) {
+
+      notify.error(
+        error.message ||
+        "Failed to delete customer"
+      );
+
+    }
+
+    setShowConfirm(false);
+
+    setCustomerToDelete(null);
 
   }
 
@@ -63,43 +100,70 @@ function CustomersPage() {
 
   return (
 
-    <div className="customers-page">
+    <AdminLayout>
 
-      <h1>Customer Management</h1>
+      <div className="customers-page">
 
-      <p>
-        Manage all customers in Honique ERP.
-      </p>
+        <h1>Customer Management</h1>
 
-      <button
-        onClick={() => {
-          setSelectedCustomer(null);
-          setShowForm(true);
-        }}
-      >
-        Add New Customer
-      </button>
+        <p>
+          Manage all customers in Honique ERP.
+        </p>
 
-      <CustomerTable
-        customers={customers}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+        <button
+          onClick={() => {
 
-      {showForm && (
-
-        <CustomerForm
-          customer={selectedCustomer}
-          onClose={() => {
-            setShowForm(false);
             setSelectedCustomer(null);
+
+            setShowForm(true);
+
           }}
-          onCustomerAdded={loadCustomers}
+        >
+          Add New Customer
+        </button>
+
+        <CustomerTable
+          customers={customers}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
 
-      )}
+        {showForm && (
 
-    </div>
+          <CustomerForm
+            customer={selectedCustomer}
+            onClose={() => {
+
+              setShowForm(false);
+
+              setSelectedCustomer(null);
+
+            }}
+            onCustomerAdded={loadCustomers}
+          />
+
+        )}
+
+        {showConfirm && (
+
+          <ConfirmDialog
+            title="Delete Customer"
+            message="Are you sure you want to delete this customer? This action cannot be undone."
+            onCancel={() => {
+
+              setShowConfirm(false);
+
+              setCustomerToDelete(null);
+
+            }}
+            onConfirm={confirmDelete}
+          />
+
+        )}
+
+      </div>
+
+    </AdminLayout>
 
   );
 

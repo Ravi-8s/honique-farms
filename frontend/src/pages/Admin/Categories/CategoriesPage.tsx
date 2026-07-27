@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import CategoryForm from "../../../components/CategoryForm/CategoryForm";
 import CategoryTable from "../../../components/CategoryTable/CategoryTable";
 
@@ -56,43 +58,47 @@ function CategoriesPage() {
 
   return (
 
-    <div className="categories-page">
+    <AdminLayout>
 
-      <h1>Category Management</h1>
+      <div className="categories-page">
 
-      <p>
-        Manage all product categories available in Honique ERP.
-      </p>
+        <h1>Category Management</h1>
 
-      <button
-        onClick={() => {
-          setSelectedCategory(null);
-          setShowForm(true);
-        }}
-      >
-        Add New Category
-      </button>
+        <p>
+          Manage all product categories available in Honique ERP.
+        </p>
 
-      <CategoryTable
-        categories={categories}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-
-      {showForm && (
-
-        <CategoryForm
-          category={selectedCategory}
-          onClose={() => {
-            setShowForm(false);
+        <button
+          onClick={() => {
             setSelectedCategory(null);
+            setShowForm(true);
           }}
-          onCategoryAdded={loadCategories}
+        >
+          Add New Category
+        </button>
+
+        <CategoryTable
+          categories={categories}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
 
-      )}
+        {showForm && (
 
-    </div>
+          <CategoryForm
+            category={selectedCategory}
+            onClose={() => {
+              setShowForm(false);
+              setSelectedCategory(null);
+            }}
+            onCategoryAdded={loadCategories}
+          />
+
+        )}
+
+      </div>
+
+    </AdminLayout>
 
   );
 

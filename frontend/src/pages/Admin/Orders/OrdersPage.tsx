@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import "./OrdersPage.css";
 
 import OrderForm from "../../../components/OrderForm/OrderForm";
@@ -33,85 +36,89 @@ function OrdersPage() {
 
   return (
 
-    <div className="orders-page">
+    <AdminLayout>
 
-      <h1>Order Management</h1>
+      <div className="orders-page">
 
-      <p>
-        Create customer orders and manage sales.
-      </p>
+        <h1>Order Management</h1>
 
-      <OrderForm />
+        <p>
+          Create customer orders and manage sales.
+        </p>
 
-      <div style={{ marginTop: "50px" }}>
+        <OrderForm />
 
-        <h2>Order History</h2>
+        <div style={{ marginTop: "50px" }}>
 
-        <table>
+          <h2>Order History</h2>
 
-          <thead>
+          <table>
 
-            <tr>
+            <thead>
 
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Total</th>
-              <th>Action</th>
+              <tr>
 
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {orders.map((order) => (
-
-              <tr key={order.id}>
-
-                <td>{order.id}</td>
-
-                <td>{order.customer}</td>
-
-                <td>
-                  {new Date(order.order_date).toLocaleDateString("en-IN")}
-                </td>
-
-                <td>{order.status}</td>
-
-                <td>
-                  ₹
-                  {Number(order.total_amount).toLocaleString("en-IN", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </td>
-
-                <td>
-
-                  <button
-                    className="add-btn"
-                    onClick={() =>
-                      navigate(`/admin/orders/${order.id}`)
-                    }
-                  >
-                    View
-                  </button>
-
-                </td>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Action</th>
 
               </tr>
 
-            ))}
+            </thead>
 
-          </tbody>
+            <tbody>
 
-        </table>
+              {orders.map((order) => (
+
+                <tr key={order.id}>
+
+                  <td>{order.id}</td>
+
+                  <td>{order.customer}</td>
+
+                  <td>
+                    {new Date(order.order_date).toLocaleDateString("en-IN")}
+                  </td>
+
+                  <td>{order.status}</td>
+
+                  <td>
+                    ₹
+                    {Number(order.total_amount).toLocaleString("en-IN", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </td>
+
+                  <td>
+
+                    <button
+                      className="add-btn"
+                      onClick={() =>
+                        navigate(`/admin/orders/${order.id}`)
+                      }
+                    >
+                      View
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
 
       </div>
 
-    </div>
+    </AdminLayout>
 
   );
 

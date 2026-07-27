@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+import AdminLayout from "../../../components/AdminLayout/AdminLayout";
+
 import "./ExpensesPage.css";
 
 function ExpensesPage() {
@@ -106,139 +109,143 @@ function ExpensesPage() {
 
   return (
 
-    <div className="expenses-page">
+    <AdminLayout>
 
-      <h1>Expense Management</h1>
+      <div className="expenses-page">
 
-      <div className="expense-form">
+        <h1>Expense Management</h1>
 
-        <select
-          value={categoryId}
-          onChange={(e) =>
-            setCategoryId(e.target.value)
-          }
-        >
+        <div className="expense-form">
 
-          <option value="">
-            Select Category
-          </option>
+          <select
+            value={categoryId}
+            onChange={(e) =>
+              setCategoryId(e.target.value)
+            }
+          >
 
-          {categories.map((category) => (
-
-            <option
-              key={category.id}
-              value={category.id}
-            >
-              {category.name}
+            <option value="">
+              Select Category
             </option>
 
-          ))}
+            {categories.map((category) => (
 
-        </select>
+              <option
+                key={category.id}
+                value={category.id}
+              >
+                {category.name}
+              </option>
 
-        <input
-          placeholder="Vendor"
-          value={vendor}
-          onChange={(e) =>
-            setVendor(e.target.value)
-          }
-        />
+            ))}
 
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) =>
-            setAmount(e.target.value)
-          }
-        />
+          </select>
 
-        <input
-          type="date"
-          value={expenseDate}
-          onChange={(e) =>
-            setExpenseDate(e.target.value)
-          }
-        />
+          <input
+            placeholder="Vendor"
+            value={vendor}
+            onChange={(e) =>
+              setVendor(e.target.value)
+            }
+          />
 
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) =>
-            setDescription(e.target.value)
-          }
-        />
+          <input
+            type="number"
+            placeholder="Amount"
+            value={amount}
+            onChange={(e) =>
+              setAmount(e.target.value)
+            }
+          />
 
-        <button
-          className="save-btn"
-          onClick={saveExpense}
-        >
-          Save Expense
-        </button>
+          <input
+            type="date"
+            value={expenseDate}
+            onChange={(e) =>
+              setExpenseDate(e.target.value)
+            }
+          />
 
-      </div>
+          <textarea
+            placeholder="Description"
+            value={description}
+            onChange={(e) =>
+              setDescription(e.target.value)
+            }
+          />
 
-      <br />
+          <button
+            className="save-btn"
+            onClick={saveExpense}
+          >
+            Save Expense
+          </button>
 
-      <table>
+        </div>
 
-        <thead>
+        <br />
 
-          <tr>
+        <table>
 
-            <th>Category</th>
+          <thead>
 
-            <th>Vendor</th>
+            <tr>
 
-            <th>Amount</th>
+              <th>Category</th>
 
-            <th>Date</th>
+              <th>Vendor</th>
 
-            <th>Description</th>
+              <th>Amount</th>
 
-          </tr>
+              <th>Date</th>
 
-        </thead>
-
-        <tbody>
-
-          {expenses.map((expense) => (
-
-            <tr key={expense.id}>
-
-              <td>{expense.category}</td>
-
-              <td>{expense.vendor}</td>
-
-              <td>
-
-                ₹
-
-                {Number(expense.amount).toLocaleString(
-                  "en-IN"
-                )}
-
-              </td>
-
-              <td>
-
-                {new Date(
-                  expense.expense_date
-                ).toLocaleDateString("en-IN")}
-
-              </td>
-
-              <td>{expense.description}</td>
+              <th>Description</th>
 
             </tr>
 
-          ))}
+          </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            {expenses.map((expense) => (
 
-    </div>
+              <tr key={expense.id}>
+
+                <td>{expense.category}</td>
+
+                <td>{expense.vendor}</td>
+
+                <td>
+
+                  ₹
+
+                  {Number(expense.amount).toLocaleString(
+                    "en-IN"
+                  )}
+
+                </td>
+
+                <td>
+
+                  {new Date(
+                    expense.expense_date
+                  ).toLocaleDateString("en-IN")}
+
+                </td>
+
+                <td>{expense.description}</td>
+
+              </tr>
+
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </AdminLayout>
 
   );
 

@@ -6,6 +6,8 @@ import {
   updateCustomer,
 } from "../../services/api";
 
+import { notify } from "../../utils/notify";
+
 import type { Customer } from "../../types/Customer";
 
 type CustomerFormProps = {
@@ -68,22 +70,28 @@ function CustomerForm({
       if (customer) {
 
         await updateCustomer(customer.id, formData);
+        notify.success("Customer updated successfully");
 
       } else {
 
         await addCustomer(formData);
+        notify.success("Customer added successfully");
 
       }
 
       onCustomerAdded();
-
       onClose();
 
     } catch (error: any) {
 
       console.error(error);
 
-      alert(error.message);
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+      notify.error(message);
 
     }
 

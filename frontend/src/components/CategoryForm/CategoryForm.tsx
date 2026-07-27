@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { notify } from "../../utils/notify";
 import "./CategoryForm.css";
 
 import {
@@ -56,10 +57,12 @@ function CategoryForm({
       if (category) {
 
         await updateCategory(category.id, formData);
+        notify.success("Category updated successfully");
 
       } else {
 
         await addCategory(formData);
+        notify.success("Category added successfully");
 
       }
 
@@ -68,7 +71,12 @@ function CategoryForm({
 
     } catch (error: any) {
 
-      alert(error.message);
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+      notify.error(message);
 
     }
 

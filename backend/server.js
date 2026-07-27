@@ -13,6 +13,8 @@ const expenseRoutes = require("./routes/expenseRoutes");
 const reportRoutes = require("./routes/reportRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const authRoutes = require("./routes/authRoutes");
+const customerAuthRoutes = require("./routes/customerAuthRoutes");
 
 const app = express();
 
@@ -22,6 +24,10 @@ app.use(express.json());
 // =====================================================
 // API Routes
 // =====================================================
+
+app.use("/auth", authRoutes);
+
+app.use("/customer-auth", customerAuthRoutes);
 
 app.use("/products", productRoutes);
 

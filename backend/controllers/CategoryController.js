@@ -7,6 +7,7 @@ const {
 
 const getCategories = async (req, res) => {
   try {
+
     const categories = await getAllCategories();
 
     res.json(categories);
@@ -43,6 +44,12 @@ const createCategory = async (req, res) => {
   } catch (error) {
 
     console.error("Error creating category:", error);
+
+    if (error.message === "CATEGORY_ALREADY_EXISTS") {
+      return res.status(409).json({
+        message: "Category already exists",
+      });
+    }
 
     res.status(500).json({
       message: "Failed to create category",

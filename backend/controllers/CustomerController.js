@@ -79,10 +79,17 @@ const removeCustomer = async (req, res) => {
 
   } catch (error) {
 
-    console.error("Error deleting customer:", error);
+    console.log("\n========== DELETE CUSTOMER ERROR ==========");
+    console.log("Message    :", error.message);
+    console.log("Code       :", error.code);
+    console.log("Detail     :", error.detail);
+    console.log("Constraint :", error.constraint);
+    console.log("Stack      :");
+    console.log(error.stack);
+    console.log("===========================================\n");
 
-    res.status(500).json({
-      message: "Failed to delete customer",
+    res.status(400).json({
+      message: error.message,
     });
 
   }

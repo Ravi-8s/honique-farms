@@ -102,6 +102,22 @@ const updateCustomer = async (id, customer) => {
 };
 
 const deleteCustomer = async (id) => {
+
+  const orderCheck = await pool.query(
+    `
+    SELECT COUNT(*) AS total
+    FROM orders
+    WHERE customer_id = $1;
+    `,
+    [id]
+  );
+
+  if (Number(orderCheck.rows[0].total) > 0) {
+    throw new Error(
+      "Cannot delete customer because they have existing orders."
+    );
+  }
+
   await pool.query(
     `
     DELETE FROM customers

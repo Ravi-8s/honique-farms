@@ -5,15 +5,55 @@ function AdminDashboard() {
 
   const navigate = useNavigate();
 
+  function handleLogout() {
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("admin");
+
+    navigate("/login");
+
+  }
+
   return (
 
     <div className="admin">
 
-      <h1>Honique ERP</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
 
-      <p className="subtitle">
-        Business Management Dashboard
-      </p>
+        <div>
+
+          <h1>Honique ERP</h1>
+
+          <p className="subtitle">
+            Business Management Dashboard
+          </p>
+
+        </div>
+
+        <button
+          onClick={handleLogout}
+          style={{
+            background: "#d32f2f",
+            color: "#ffffff",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Logout
+        </button>
+
+      </div>
 
       <div className="dashboard-grid">
 
