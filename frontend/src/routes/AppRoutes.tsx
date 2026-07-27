@@ -6,7 +6,9 @@ import AdminDashboard from "../components/AdminDashboard/AdminDashboard";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 
 import LoginPage from "../pages/Admin/Login/LoginPage";
-import RegisterPage from "../pages/Customer/Register/RegisterPage";
+
+import CustomerRegisterPage from "../pages/Customer/Register/RegisterPage";
+import CustomerLoginPage from "../pages/Customer/Login/LoginPage";
 
 import ProductsPage from "../pages/Admin/Products/ProductsPage";
 import CategoriesPage from "../pages/Admin/Categories/CategoriesPage";
@@ -42,7 +44,12 @@ export default function AppRoutes() {
 
         <Route
           path="/customer/register"
-          element={<RegisterPage />}
+          element={<CustomerRegisterPage />}
+        />
+
+        <Route
+          path="/customer/login"
+          element={<CustomerLoginPage />}
         />
 
         {/* Admin */}
